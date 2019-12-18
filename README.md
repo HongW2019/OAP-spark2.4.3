@@ -1,19 +1,19 @@
 # Getting Started with OAP
 [![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
 
-If you want to get started with OAP quickly, we also provide pre-compiled Spark and OAP to you, then you can directly skip to How to Deploy OAP.
+If you want to get started with OAP quickly, we also provide pre-compiled Spark and OAP to you, then you can directly skip to Configuration.
 ## Prerequisites
 You should have Apache Spark of version 2.3.2 installed in your cluster. Refer to Apache Spark's guidance for installation details.You should have set up a cluster, which has Hadoop, Yarn, Spark on it.
 ## Dependencies
 You will need to install required packages on the build system:
-•	autoconf
-•	automake
-•	gcc-c++
-•	libnuma-devel
-•	libtool
-•	numactl-devel
-•	numactl
-•	memkind
+*	autoconf
+*	automake
+*	gcc-c++
+*	libnuma-devel
+*	libtool
+*	numactl-devel
+*	numactl
+*	memkind
 ## Building
 
 ```
@@ -127,16 +127,14 @@ You can run Spark with the follow example to try OAP cache function, then you ca
 When you want to use DCPMM to cache hot data, you should change and add following configurations.
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
 ```
-spark.executor.instances                          <2X of worker nodes>
-spark.yarn.numa.enabled                          true                       # enable numa
-spark.executorEnv.MEMKIND_ARENA_NUM_PER_KIND          1
-spark.memory.offHeap.enabled               false
-spark.speculation                                         false
-spark.sql.oap.fiberCache.memory.manager     pm
-spark.sql.oap.fiberCache.persistent.memory.initial.size             # to
-spark.sql.oap.fiberCache.persistent.memory.reserved.size
-spark.dynamicAllocation.executorIdleTimeout          3600s
-spark.sql.oap.memkind.conservative.enable              true
-spark.sql.oap.parquet.data.cache.enable   true         #for parquet fileformat
-spark.sql.oap.orc.data.cache.enable            true         #for orc fileformat
+spark.executor.instances                                  <2X of worker nodes>
+spark.yarn.numa.enabled                                    true            # enable numa
+spark.executorEnv.MEMKIND_ARENA_NUM_PER_KIND               1
+spark.memory.offHeap.enabled                               false
+spark.speculation                                          false
+spark.sql.oap.fiberCache.memory.manager                    pm              # use DCPMM as cache media
+spark.sql.oap.fiberCache.persistent.memory.initial.size                    # total available DCPMM  per executor
+spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the left DCPMM per executor
+spark.sql.oap.parquet.data.cache.enable                    true            #for parquet fileformat
+spark.sql.oap.orc.data.cache.enable                        true            #for orc fileformat
 ```
