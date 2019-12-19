@@ -1,7 +1,7 @@
 # Getting Started with OAP
 [![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
 
-If you want to get started with OAP quickly, we also provide pre-compiled Spark and OAP to you, then you can directly skip to Configuration.
+If you want to get started with OAP quickly, we also provide pre-version [Spark-2.3.2]() and [OAP]() to you, then you can directly skip to [Configuration](## Configuration).
 ## Prerequisites
 You should have Apache Spark of version 2.3.2 installed in your cluster. Refer to Apache Spark's guidance for installation details.You should have set up a cluster, which has Hadoop, Yarn, Spark on it.
 ## Dependencies
@@ -135,6 +135,6 @@ spark.speculation                                          false
 spark.sql.oap.fiberCache.memory.manager                    pm              # use DCPMM as cache media
 spark.sql.oap.fiberCache.persistent.memory.initial.size                    # total available DCPMM  per executor
 spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the left DCPMM per executor
-spark.sql.oap.parquet.data.cache.enable                    true            #for parquet fileformat
-spark.sql.oap.orc.data.cache.enable                        true            #for orc fileformat
+spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
+spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
 ```
