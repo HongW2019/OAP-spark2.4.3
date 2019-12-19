@@ -17,8 +17,8 @@ You will need to install required packages on the build system:
 ## Building OAP
 Build OAP with [Maven](http://maven.apache.org/)
 ```
-git clone https://github.com/Intel-bigdata/OAP.git
-cd OAP & git checkout -b branch-0.6-spark-2.3.2 origin/branch-0.6-spark-2.3.2
+git clone -b branch-0.6-spark-2.3.x  https://github.com/Intel-bigdata/OAP.git
+cd OAP
 mvn clean -q -DskipTests package
 ```
 You can find the “oap-0.6-with-spark-2.3.2.jar”  in “./target/”.
