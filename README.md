@@ -46,7 +46,7 @@ spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.ja
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
-### Standalone and Spark on K8S Mode
+### Standalone Mode
 ```
 spark.sql.extensions               org.apache.spark.sql.OapExtensions
 spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
@@ -83,12 +83,12 @@ Executor instances can be 1~2X of worker nodes. Considering the count of executo
 After deployment and configuration, you can run by` bin/spark-sql, bin/spark-shell, bin/spark-submit, sbin/start-thriftserver or bin/pyspark. `
 If failed to launch Spark with OAP, you need to check the logs to find the reason.
 ## How to Use OAP
-### How to Use Index with OAP on Spark
+### Use Index with OAP on Spark
 You can run Spark with the following example to try OAP index function.
 ```
 . $SPARK_HOME/bin/spark-shell
 > spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
-      | USING oap)
+      | USING parquet)
       | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
 > val data = (1 to 300).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
@@ -99,7 +99,7 @@ You can run Spark with the following example to try OAP index function.
 ```
 For  more detailed examples on OAP performance comparation, you can refer to this [page](https://github.com/Intel-bigdata/OAP/wiki/OAP-examples) for further instructions.
 
-### How to Use Cache with OAP on Spark
+### Use Cache with OAP on Spark
 If you want to run OAP with cache function, firstly you should add some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. OAP provides two media types to cache hot data: DRAM and DCPMM.
 
 #### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
