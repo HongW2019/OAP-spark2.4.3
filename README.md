@@ -105,18 +105,17 @@ spark.memory.offHeap.size                  <set a suitable size>
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the follow example to try OAP cache function with DRAM, then you can find the cache metric with OAP TAB in the spark history Web UI.
+You can run Spark with the following example to try OAP cache function with DRAM, then you can find the cache metric with OAP TAB in the spark history Web UI.
 ```
 . $SPARK_HOME/bin/spark-shell
 > spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
       | USING parquet)
       | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
-> val data = (1 to 3000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
+> val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
 > spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
 ```
 When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind autoconf automake libtool m4 `
-
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
 ```
 spark.executor.instances                                  <2X of worker nodes>
@@ -129,4 +128,14 @@ spark.sql.oap.fiberCache.persistent.memory.initial.size                    # tot
 spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the left DCPMM per executor
 spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
+```
+You can also run Spark with the same following example to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
+```
+. $SPARK_HOME/bin/spark-shell
+> spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
+      | USING parquet)
+      | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
+> val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
+> spark.sql("insert overwrite table oap_test select * from t")
+> spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
 ```
