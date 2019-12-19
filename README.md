@@ -120,6 +120,7 @@ You can run Spark with the following example to try OAP cache function with DRAM
 > spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
 ```
 When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind autoconf automake libtool m4 `
+Then you need to rebuild OAP with "persistent-memory", and set the “initialPath” of numa node in “persistent-memory.xml”.
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
 ```
 spark.executor.instances                                  <2X of worker nodes>
