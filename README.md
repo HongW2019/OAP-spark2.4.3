@@ -56,7 +56,7 @@ spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.j
 
 In the following part, we will take Spark on Yarn with Client Mode for example to introduce you more configuration details to deploy Spark with OAP correctly.
 
-### For yarn
+### For YARN
 With Yarn, you need to set the following properties to ensure all the available resources (CPU cores, memory) can be fully utilized and not be exceeded by the Spark executors with OAP.
 ```
 yarn.nodemanager.vmem-pmem-ratio
@@ -68,15 +68,15 @@ yarn.scheduler.maximum-allocation-vcores              # no more than yarn.nodema
 yarn.scheduler.minimum-allocation-vcores              # less than yarn.scheduler.maximum-allocation-vcore
 ```
 You need to ensure that the above properties are consistent among the master and all the workers, so we recommend you copy` hdfs-site.xml, mapred-site.xml, yarn-site.xml `of master to your workers to keep consistent among all nodes.
-### For spark
+### For Spark
 Next you also need add the following configurations to $SPARK_HOME/conf/spark-defaults.conf. 
 ```
 spark.driver.memory
 spark.executor.cores                              # less than yarn.scheduler.maximum-allocation-vcores
 spark.executor.memory                             # less than yarn.scheduler.maximum-allocation-mb                              
 spark.yarn.executor.memoryOverhead                # close to spark.memory.offHeap.size
-spark.executor.instances                                     
-spark.memory.offHeap.enabled           
+spark.executor.instances                          # 1~2X of worker nodes         
+spark.memory.offHeap.enabled                      
 spark.memory.offHeap.size                         
 ```
 Executor instances can be 1~2X of worker nodes. Considering the count of executor instances (N) on each node, executor memory can be around 1/N of each worker total available memory. Usually each worker has one or two executor instances. However, considering the cache utilization, one executor per worker node is recommended. Always enable offHeap memory and set a reasonable (the larger the better) size, as long as OAP's fine-grained cache takes advantage of offHeap memory, otherwise user might encounter weird circumstances.
@@ -128,7 +128,7 @@ spark.executorEnv.MEMKIND_ARENA_NUM_PER_KIND               1
 spark.memory.offHeap.enabled                               false
 spark.speculation                                          false
 spark.sql.oap.fiberCache.memory.manager                    pm              # use DCPMM as cache media
-spark.sql.oap.fiberCache.persistent.memory.initial.size                    # total available DCPMM  per executor
+spark.sql.oap.fiberCache.persistent.memory.initial.size                    # ~total available DCPMM per executor
 spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the left DCPMM per executor
 spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
