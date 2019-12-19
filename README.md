@@ -1,7 +1,7 @@
 # Getting Started with OAP
 [![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
 
-If you want to get started with OAP quickly, we also provide pre-built [Spark-2.3.2]() and [OAP]() to you, then you can directly skip to [Configuration](#Configuration).
+If you want to get started with OAP quickly and have set up Hadoop clusters, we also provide pre-built [OAP jar]() and [Spark-2.3.2]() to you, then you can directly skip to [Configuration](#Configuration).
 ## Prerequisites
 We suppose you have set Hadoop clusters which have Yarn, Hive and Spark, and the clusters have configured appropriately according to Apache Hadoop [docs]( https://hadoop.apache.org/docs/stable/index.html).  We recommend you install [Spark-2.3.2]( https://github.com/apache/spark/tree/v2.3.2) and refer to [guidance](https://github.com/apache/spark) for building Spark details.
 ## Dependencies
@@ -15,7 +15,7 @@ You will need to install required packages on the build system:
 *	numactl
 *	memkind
 ## Building OAP
-
+Build OAP with [Maven](http://maven.apache.org/)
 ```
 git clone https://github.com/Intel-bigdata/OAP.git
 cd OAP & git checkout -b branch-0.6-spark-2.3.2 origin/branch-0.6-spark-2.3.2
