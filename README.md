@@ -14,7 +14,7 @@ You will need to install required packages on the build system:
 *	numactl-devel
 *	numactl
 *	memkind
-## Building
+## Building OAP
 
 ```
 git clone https://github.com/Intel-bigdata/OAP.git
