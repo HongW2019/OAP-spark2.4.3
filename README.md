@@ -3,7 +3,7 @@
 
 If you want to get started with OAP quickly, we also provide pre-build [Spark-2.3.2]() and [OAP]() to you, then you can directly skip to [Configuration](#Configuration).
 ## Prerequisites
-You should have Apache Spark of version 2.3.2 installed in your cluster. Refer to Apache Spark's guidance for installation details.You should have set up a cluster, which has Hadoop, Yarn, Spark on it.
+We suppose you have set Hadoop clusters which have Yarn, Hive and Spark, and this clusters have configured appropriately according to Apache Hadoop guidance [docs]( https://hadoop.apache.org/docs/stable/index.html).  We recommend you install [Spark-2.3.2]( https://github.com/apache/spark/tree/v2.3.2) and refer to [guidance] (https://github.com/apache/spark) for building Spark details.
 ## Dependencies
 You will need to install required packages on the build system:
 *	autoconf
