@@ -19,13 +19,9 @@ You will need to install required packages on the build system:
 ```
 git clone https://github.com/Intel-bigdata/OAP.git
 cd OAP & git checkout -b branch-0.6-spark-2.3.2 origin/branch-0.6-spark-2.3.2
-mvn clean -q -Ppersistent-memory -DskipTests package
+mvn clean -q -DskipTests package
 ```
-Profile `persistent-memory` is Optional.
 You can find the “oap-0.6-with-spark-2.3.2.jar”  in “./target/”.
-When you compiled with “persistent-memory”, you need create the “persistent-memory.xml” file in conf directory by command
-`cd conf & cp persistent-memory.xml.template  ./persistent-memory.xml`
-Then you need set the “initialPath” of numa node in “persistent-memory.xml”.
 
 ## Configuration
 When Spark runs on clusters, we list corresponding OAP configurations in “$SPARK_HOME/conf/spark-defaults.conf” to different deployment modes of Spark.
