@@ -21,7 +21,7 @@ git clone -b branch-0.6-spark-2.3.x  https://github.com/Intel-bigdata/OAP.git
 cd OAP
 mvn clean -q -DskipTests package
 ```
-You can find the “oap-0.6-with-spark-2.3.2.jar”  in “./target/”.
+You can find the OAP jar-- “oap-0.6-with-spark-2.3.2.jar”  in “./target/”.
 
 ## Configuration
 When Spark runs on clusters, we list corresponding OAP configurations in “$SPARK_HOME/conf/spark-defaults.conf” to different deployment modes of Spark.
