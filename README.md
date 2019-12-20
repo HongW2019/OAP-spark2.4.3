@@ -99,7 +99,7 @@ You can run Spark with the following example to try OAP index function.
 ```
 For  more detailed examples on OAP performance comparation, you can refer to this [page](https://github.com/Intel-bigdata/OAP/wiki/OAP-examples) for further instructions.
 
-### Use Cache with OAP on Spark
+### Use DRAM to Cache with OAP
 If you want to run OAP with cache function, firstly you should add some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. OAP provides two media types to cache hot data: DRAM and DCPMM.
 
 #### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
@@ -119,6 +119,7 @@ You can run Spark with the following example to try OAP cache function with DRAM
 > spark.sql("insert overwrite table oap_test select * from t")
 > spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
 ```
+### Use DCPMM to Cache with OAP 
 When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind autoconf automake libtool m4 `
 Then you need to rebuild OAP with "persistent-memory", and set the “initialPath” of numa node in “persistent-memory.xml”.For more details, please refer to [development docs]()
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
