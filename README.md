@@ -2,30 +2,11 @@
 [![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
 
 * [Prerequisites](#Prerequisites)
-* [Building OAP](#Building_OAP)
 * [Configuration](#Configuration)
 * [How to Use OAP](#How_to_Use_OAP)
 
-If you want to get started with OAP quickly and have set up Hadoop clusters, we also provide pre-built [OAP jar]() and [Spark-2.3.2]() to you, then you can directly skip to [Configuration](#Configuration).
 ## Prerequisites
-We suppose you have set Hadoop clusters which have Yarn, Hive and Spark, and the clusters have configured appropriately according to Apache Hadoop [docs]( https://hadoop.apache.org/docs/stable/index.html).  We recommend you install [Spark-2.3.2]( https://github.com/apache/spark/tree/v2.3.2) and refer to [guidance](https://github.com/apache/spark) for building Spark details.
-
-You will need to install required packages on the build system:
-*	autoconf
-*	automake
-*	gcc-c++
-*	libnuma-devel
-*	libtool
-*	numactl-devel
-*	numactl
-*	memkind
-## Building OAP
-Build OAP with [Maven](http://maven.apache.org/)
-```
-git clone -b branch-0.6-spark-2.3.x  https://github.com/Intel-bigdata/OAP.git
-cd OAP && mvn clean -q -DskipTests package
-```
-You can find the OAP jar-- “oap-0.6-with-spark-2.3.2.jar”  in “./target/”.
+Before getting started with OAP on Spark, we recommand you have set up a Hadoop cluster with YARN which runs well. We provide you with the the pre-built [OAP]() to deploy on the pre-built [Spark](), so you can download them to your master machine.
 ## Configuration
 When Spark runs on clusters, we list corresponding OAP configurations in “$SPARK_HOME/conf/spark-defaults.conf” to different deployment modes of Spark.
 ### Spark on Yarn with Client Mode
