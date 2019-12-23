@@ -28,7 +28,7 @@ spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.ja
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
-In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install Spark Standalone mode, you simply place a compiled version of Spark and OAP on each node on the cluster.
+In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
 ```
 spark.sql.extensions               org.apache.spark.sql.OapExtensions
 spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
@@ -37,20 +37,6 @@ spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.j
 
 In the following part, we will take Spark on Yarn with Client Mode for example to introduce you more configuration details to deploy Spark with OAP correctly.
 
-### For YARN
-With Yarn, you need to set the following properties to ensure all the available resources (CPU cores, memory) can be fully utilized and not be exceeded by the Spark executors with OAP.
-```
-yarn.nodemanager.vmem-pmem-ratio
-yarn.nodemanager.resource.memory-mb                   # total available memory size of each worker
-yarn.scheduler.maximum-allocation-mb                  # no more than yarn.nodemanager.resource.memory-mb
-yarn.scheduler.minimum-allocation-mb                  # less than yarn.scheduler.maximum-allocation-mb
-yarn.nodemanager.resource.cpu-vcores                  # total available CPU cores of each worker
-yarn.scheduler.maximum-allocation-vcores              # no more than yarn.nodemanager.resource.cpu-vcores, the default number is 32
-yarn.scheduler.minimum-allocation-vcores              # less than yarn.scheduler.maximum-allocation-vcore
-```
-You need to ensure that the above properties are consistent among the master and all the workers, so we recommend you copy` hdfs-site.xml, mapred-site.xml, yarn-site.xml `of master to your workers to keep consistent among all nodes.
-### For Spark
-Next you also need add the following configurations to $SPARK_HOME/conf/spark-defaults.conf. 
 ```
 spark.driver.memory
 spark.executor.cores                              # less than yarn.scheduler.maximum-allocation-vcores
