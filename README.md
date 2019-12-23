@@ -56,18 +56,28 @@ After you have start Hadoop and YRAN, you can run Spark with the following examp
 ```
 . $SPARK_HOME/bin/spark-shell
 ```
-Then create a table on HDFS
+Then create a table on corresponding HDFS data path.
 ```
 > spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
       | USING parquet)
       | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
 ```
 
+```
 > val data = (1 to 300).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
+```
+Create index with OAP Index
+```
 > spark.sql("create oindex index1 on oap_test (a)")
 > spark.sql("show oindex from oap_test").show()
+```
+Use OAP Index
+```
 > spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
+```
+Drop index
+```
 > spark.sql("drop oindex index1 on oap_test")
 ```
 For  more detailed examples on OAP performance comparation, you can refer to this [page](https://github.com/Intel-bigdata/OAP/wiki/OAP-examples) for further instructions.
