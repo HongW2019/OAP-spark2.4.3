@@ -10,7 +10,6 @@ Before getting started with OAP on Spark, we recommand you have set up a Hadoop 
 ## Configuration
 A common deployment strategy is to submit your application from a gateway machine that is physically co-located with your worker machines. In this setup, `client` mode is appropriate. In `client` mode, the driver is launched directly within the `spark-submit `process which acts as a client to the cluster. The input and output of the application is attached to the console. Thus, this mode is especially suitable for applications that involve the REPL (e.g. Spark shell).
 To make Spark with OAP run well in `client` mode , We list required configurations in `$SPARK_HOME/conf/spark-defaults.conf`
-
 ```
 spark.master                      yarn
 spark.deploy-mode                 client
@@ -19,7 +18,7 @@ spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.ja
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 spark.driver.extraClassPath       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path
 ```
-Alternatively, if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use cluster mode to minimize network latency between the drivers and the executors. Currently, the standalone mode does not support cluster mode for Python applications.
+Alternatively, if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use cluster mode to minimize network latency between the drivers and the executors. 
 ```
 spark.master                      yarn
 spark.deploy-mode                 cluster
@@ -28,13 +27,12 @@ spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.ja
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
-### Standalone Mode
+In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install Spark Standalone mode, you simply place a compiled version of Spark and OAP on each node on the cluster.
 ```
 spark.sql.extensions               org.apache.spark.sql.OapExtensions
 spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
 spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
 ```
-**NOTE**: For spark standalone mode, you have to put oap-0.6-with-2.3.2.jar to both driver and executors since spark.files is not working, also don't forget to update corresponding extraClassPath. 
 
 In the following part, we will take Spark on Yarn with Client Mode for example to introduce you more configuration details to deploy Spark with OAP correctly.
 
