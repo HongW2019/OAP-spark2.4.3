@@ -47,6 +47,7 @@ spark.memory.offHeap.enabled
 spark.memory.offHeap.size                         
 ```
 Executor instances can be 1~2X of worker nodes. Considering the count of executor instances (N) on each node, executor memory can be around 1/N of each worker total available memory. Usually each worker has one or two executor instances. However, considering the cache utilization, one executor per worker node is recommended. Always enable offHeap memory and set a reasonable (the larger the better) size, as long as OAP's fine-grained cache takes advantage of offHeap memory, otherwise user might encounter weird circumstances.
+
 After deployment and configuration, you can run by` bin/spark-sql, bin/spark-shell, bin/spark-submit, sbin/start-thriftserver or bin/pyspark. `
 If failed to launch Spark with OAP, you need to check the logs to find the reason.
 ## How to Use OAP
