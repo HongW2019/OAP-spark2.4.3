@@ -8,6 +8,7 @@
 ## Prerequisites
 Before getting started with OAP on Spark, we recommand you have set up a Hadoop cluster with YARN which runs well. We provide you with the the pre-built [OAP]() to deploy on the pre-built [Spark](), so you can download both of them to your master machine.
 ## Configuration
+Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. There are two deploy modes that can be used to launch Spark applications on YARN. In cluster mode, the Spark driver runs inside an application master process which is managed by YARN on the cluster, and the client can go away after initiating the application. In client mode, the driver runs in the client process, and the application master is only used for requesting resources from YARN.
 A common deployment strategy is to submit your application from a gateway machine that is physically co-located with your worker machines. In this setup, `client` mode is appropriate. In `client` mode, the driver is launched directly within the `spark-submit `process which acts as a client to the cluster. The input and output of the application is attached to the console. Thus, this mode is especially suitable for applications that involve the REPL (e.g. Spark shell).
 
 To make Spark with OAP run well in `client` mode , We list required configurations in `$SPARK_HOME/conf/spark-defaults.conf`
