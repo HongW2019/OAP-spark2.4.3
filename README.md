@@ -92,7 +92,7 @@ spark.memory.offHeap.size                  <set a suitable size>
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the following example to try OAP cache function with DRAM, then you can find the cache metric with OAP TAB in the spark history Web UI.
+You can run Spark with the following example to try OAP cache function with DRAM. This time we use thrift server to run Spark, which can show Cache more specifically, then you can find the cache metric with OAP TAB in the spark history Web UI. 
 ```
 . $SPARK_HOME/bin/spark-shell
 > spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
