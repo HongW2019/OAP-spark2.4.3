@@ -35,7 +35,7 @@ spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.j
 spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
 ```
 
-In the following part, we will take Spark on Yarn with Client Mode for example to introduce you more configuration details to deploy Spark with OAP correctly.
+In the following part, we will take `Spark on Yarn with Client Mode` for example to introduce you more configuration details to deploy Spark with OAP correctly.
 
 ```
 spark.driver.memory
@@ -52,12 +52,17 @@ After deployment and configuration, you can run by` bin/spark-sql, bin/spark-she
 If failed to launch Spark with OAP, you need to check the logs to find the reason.
 ## How to Use OAP
 ### Use Index with OAP on Spark
-You can run Spark with the following example to try OAP index function.
+After you have start Hadoop and YRAN, you can run Spark with the following example to try OAP index function with Spark shell.
 ```
 . $SPARK_HOME/bin/spark-shell
+```
+Then create a table on HDFS
+```
 > spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
       | USING parquet)
       | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
+```
+
 > val data = (1 to 300).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
 > spark.sql("create oindex index1 on oap_test (a)")
