@@ -6,10 +6,11 @@
 * [How to Use OAP](#How_to_Use_OAP)
 
 ## Prerequisites
-Before getting started with OAP on Spark, we recommand you have set up a Hadoop cluster with YARN which runs well. We provide you with the the pre-built [OAP]() to deploy on the pre-built [Spark](), so you can download them to your master machine.
+Before getting started with OAP on Spark, we recommand you have set up a Hadoop cluster with YARN which runs well. We provide you with the the pre-built [OAP]() to deploy on the pre-built [Spark](), so you can download both of them to your master machine.
 ## Configuration
-When Spark runs on clusters, we list corresponding OAP configurations in “$SPARK_HOME/conf/spark-defaults.conf” to different deployment modes of Spark.
-### Spark on Yarn with Client Mode
+A common deployment strategy is to submit your application from a gateway machine that is physically co-located with your worker machines. In this setup, `client` mode is appropriate. In `client` mode, the driver is launched directly within the `spark-submit `process which acts as a client to the cluster. The input and output of the application is attached to the console. Thus, this mode is especially suitable for applications that involve the REPL (e.g. Spark shell).
+To make Spark with OAP run well in `client` mode , We list required configurations in `$SPARK_HOME/conf/spark-defaults.conf`
+
 ```
 spark.master                      yarn
 spark.deploy-mode                 client
@@ -18,7 +19,7 @@ spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.ja
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 spark.driver.extraClassPath       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path
 ```
-### Spark on Yarn with Cluster Mode
+Alternatively, if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use cluster mode to minimize network latency between the drivers and the executors. Currently, the standalone mode does not support cluster mode for Python applications.
 ```
 spark.master                      yarn
 spark.deploy-mode                 cluster
