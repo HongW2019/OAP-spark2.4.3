@@ -120,8 +120,20 @@ Then you can find the cache metric with OAP TAB in the spark history Web UI.
 
 ![webUI](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/webUI.png)
 ### Use DCPMM to Cache with OAP 
-When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind autoconf automake libtool m4 `
-Then you need to rebuild OAP with "persistent-memory", and set the “initialPath” of numa node in “persistent-memory.xml”.For more details, please refer to [development docs]()
+When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind `
+Then you need create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
+```
+<persistentMemoryPool>
+  <!--The numa id-->
+  <numanode id="0">
+    <!--The initial path for Intel Optane DC persistent memory-->
+    <initialPath>/mnt/pmem0</initialPath>
+  </numanode>
+  <numanode id="1">
+    <initialPath>/mnt/pmem1</initialPath>
+  </numanode>
+</persistentMemoryPool>
+```
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
 ```
 spark.executor.instances                                  <2X of worker nodes>
