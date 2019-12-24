@@ -58,9 +58,9 @@ After you have start Hadoop and YRAN, you can run Spark with the following examp
 ```
 Then create a table on corresponding HDFS data path.
 ```
-> spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
-      | USING parquet)
-      | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
+> spark.sql(s"""CREATE TABLE oap_test (a INT, b STRING)
+       USING parquet
+       OPTIONS (path 'hdfs:///user/oap/')""".stripMargin)
 ```
 
 ```
