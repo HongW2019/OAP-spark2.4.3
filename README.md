@@ -23,21 +23,7 @@ spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.ja
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 spark.driver.extraClassPath       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path
 ```
-Alternatively, if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. 
-```
-spark.master                      yarn
-spark.deploy-mode                 cluster
-spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path    
-spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
-spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
-```
-In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
-```
-spark.sql.extensions               org.apache.spark.sql.OapExtensions
-spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
-spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
-```
+
 
 In the following part, we will take `Spark on Yarn with Client Mode` for example to introduce you more configuration details to deploy Spark with OAP correctly.
 
@@ -87,6 +73,21 @@ Drop index
 > spark.sql("drop oindex index1 on oap_test")
 ```
 For  more detailed examples on OAP performance comparation, you can refer to this [page](https://github.com/Intel-bigdata/OAP/wiki/OAP-examples) for further instructions.
+Alternatively, if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. 
+```
+spark.master                      yarn
+spark.deploy-mode                 cluster
+spark.sql.extensions              org.apache.spark.sql.OapExtensions
+spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path    
+spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
+spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
+```
+In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
+```
+spark.sql.extensions               org.apache.spark.sql.OapExtensions
+spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
+spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
+```
 
 ### Use DRAM to Cache with OAP
 If you want to run OAP with cache function, firstly you should change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. OAP provides two media types to cache hot data: DRAM and DCPMM.
