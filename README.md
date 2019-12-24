@@ -96,8 +96,8 @@ You can run Spark with the following example to try OAP cache function with DRAM
 ```
 . $SPARK_HOME/bin/spark-shell
 > spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
-      | USING parquet)
-      | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
+       USING parquet
+       OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
 > val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
 > spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
