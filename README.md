@@ -147,6 +147,7 @@ spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the
 spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
 ```
+![Spark configuration with DCPMM cache](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/spark-conf.png)
 You can also run Spark with the same following example to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
 ```
 . $SPARK_HOME/bin/spark-shell
