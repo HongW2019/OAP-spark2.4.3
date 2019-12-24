@@ -56,7 +56,7 @@ After you have start Hadoop and YRAN, you can run Spark with the following examp
 ```
 . $SPARK_HOME/bin/spark-shell
 ```
-Then create a table on corresponding HDFS data path.
+Then create a table on corresponding HDFS data path, here take our data path ```hdfs:///user/oap/```for example.
 ```
 > spark.sql(s"""CREATE TABLE oap_test (a INT, b STRING)
        USING parquet
@@ -64,7 +64,7 @@ Then create a table on corresponding HDFS data path.
 ```
 
 ```
-> val data = (1 to 300).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
+> val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
 ```
 Create index with OAP Index
@@ -83,7 +83,7 @@ Drop index
 For  more detailed examples on OAP performance comparation, you can refer to this [page](https://github.com/Intel-bigdata/OAP/wiki/OAP-examples) for further instructions.
 
 ### Use DRAM to Cache with OAP
-If you want to run OAP with cache function, firstly you should add some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. OAP provides two media types to cache hot data: DRAM and DCPMM.
+If you want to run OAP with cache function, firstly you should change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. OAP provides two media types to cache hot data: DRAM and DCPMM.
 
 #### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
 ```
@@ -92,16 +92,16 @@ spark.memory.offHeap.size                  <set a suitable size>
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the following example to try OAP cache function with DRAM. This time we use thrift server to run Spark, which can show Cache more specifically, then you can find the cache metric with OAP TAB in the spark history Web UI. 
+You can run Spark with the following example to try OAP cache function with DRAM. This time we use thrift server to run Spark,  then you can find the cache metric with OAP TAB in the spark history Web UI. 
 ```
-. $SPARK_HOME/bin/spark-shell
-> spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
-       USING parquet
-       OPTIONS (path 'hdfs:///user/oap/')""".stripMargin)
-> val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
-> spark.sql("insert overwrite table oap_test select * from t")
-> spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
+. $SPARK_HOME/sbin/start-thriftserver.sh
+. 
+
+> SELECT * FROM oap_test WHERE a = 1;
+> SELECT * FROM oap_test WHERE a = 2;
+> SELECT * FROM oap_test WHERE a = 3;
 ```
+
 ### Use DCPMM to Cache with OAP 
 When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind autoconf automake libtool m4 `
 Then you need to rebuild OAP with "persistent-memory", and set the “initialPath” of numa node in “persistent-memory.xml”.For more details, please refer to [development docs]()
