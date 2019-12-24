@@ -3,11 +3,13 @@
 
 * [Prerequisites](#Prerequisites)
 * [Getting Started with OAP](#Configuration)
-* [C](#How_to_Use_OAP)
+* [Cluster and Standalone Mode](#How_to_Use_OAP)
+* [Working with OAP Index](#)
+* [Working with OAP Cache](#)
 
 ## Prerequisites
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built [Spark-2.3.2]().
-### Get OAP Package
+### Building OAP
 OAP package Build
 We have a pre-built [OAP-0](), you can download to your master machine.
 ## Configuration
@@ -88,9 +90,12 @@ spark.sql.extensions               org.apache.spark.sql.OapExtensions
 spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
 spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
 ```
+## Working with OAP Cache
 
+If you want to run OAP with cache function, there are two media types in OAP to cache hot data: DRAM and DCPMM. To better
+firstly you should change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. 
 ### Use DRAM to Cache with OAP
-If you want to run OAP with cache function, firstly you should change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. OAP provides two media types to cache hot data: DRAM and DCPMM.
+
 
 #### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
 ```
@@ -127,6 +132,9 @@ next you can run query like
 Then you can find the cache metric with OAP TAB in the spark history Web UI.
 
 ![webUI](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/webUI.png)
+
+
+
 ### Use DCPMM to Cache with OAP 
 When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind `
 Then you need create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
