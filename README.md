@@ -3,7 +3,7 @@
 
 * [Prerequisites](#Prerequisites)
 * [Configuration](#Configuration)
-* [How_to_Use_OAP](#How_to_Use_OAP)
+* [How to Use OAP](#How_to_Use_OAP)
 
 ## Prerequisites
 Before getting started with OAP on Spark, we recommand you have set up a Hadoop cluster with YARN which runs well. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. We provide you with the the pre-built [Spark]() and [OAP](), so you can download both of them to your master machine.
@@ -94,7 +94,7 @@ spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
 You can run Spark with the following example to try OAP cache function with DRAM. We recommand you use Thrift server
 The Thrift JDBC/ODBC server implemented here corresponds to the HiveServer2 in Hive 1.2.1. You can test the JDBC server with the beeline script that comes with Spark.
-In the [Index](### Use Index with OAP on Spark) part, we have create a table oap_test, next we will try OAP Cache.
+In the [Index](#Use Index with OAP on Spark) part, we have create a table oap_test, next we will try OAP Cache.
 When we use ```spark-shell``` to create table oap_test, metastore_db was created in the current directory "$SPARK_HOME/bin/" , so firstly we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
