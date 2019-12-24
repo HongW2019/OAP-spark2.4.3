@@ -109,7 +109,8 @@ When ```0: jdbc:hive2://vsr211:10000> ``` shows up, next you can run query like
 > SELECT * FROM oap_test WHERE a = 2;
 > SELECT * FROM oap_test WHERE a = 3;
 ```
-Then you can find the cache metric with OAP TAB in the spark history Web UI. 
+Then you can find the cache metric with OAP TAB in the spark history Web UI.
+
 ![webUI](./webUI.PNG)
 ### Use DCPMM to Cache with OAP 
 When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind autoconf automake libtool m4 `
