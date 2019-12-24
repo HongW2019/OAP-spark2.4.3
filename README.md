@@ -3,7 +3,7 @@
 
 * [Prerequisites](#Prerequisites)
 * [Configuration](#Configuration)
-* [How to Use OAP](#How_to_Use_OAP)
+* [How_to_Use_OAP](#How_to_Use_OAP)
 
 ## Prerequisites
 Before getting started with OAP on Spark, we recommand you have set up a Hadoop cluster with YARN which runs well. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. We provide you with the the pre-built [Spark]() and [OAP](), so you can download both of them to your master machine.
