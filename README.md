@@ -92,15 +92,24 @@ spark.memory.offHeap.size                  <set a suitable size>
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the following example to try OAP cache function with DRAM. This time we use thrift server to run Spark,  then you can find the cache metric with OAP TAB in the spark history Web UI. 
+You can run Spark with the following example to try OAP cache function with DRAM. We recommand you use Thrift server
+The Thrift JDBC/ODBC server implemented here corresponds to the HiveServer2 in Hive 1.2.1. You can test the JDBC server with the beeline script that comes with Spark.
+In the [Index](### Use Index with OAP on Spark) part, we have create a table oap_test, next we will try OAP Cache.
+When we use ```spark-shell``` to create table oap_test, metastore_db was created in the current directory "$SPARK_HOME/bin/" , so firstly we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
-. 
-
+```
+Now you can use beeline to test the Thrift JDBC/ODBC server, vsr211 is hostname, so you need change to your hostname.
+```
+./beeline -u jdbc:hive2://vsr211:10000       
+```
+When ```0: jdbc:hive2://vsr211:10000> ``` shows up, next you can run query like
+```
 > SELECT * FROM oap_test WHERE a = 1;
 > SELECT * FROM oap_test WHERE a = 2;
 > SELECT * FROM oap_test WHERE a = 3;
 ```
+Then you can find the cache metric with OAP TAB in the spark history Web UI. 
 
 ### Use DCPMM to Cache with OAP 
 When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind autoconf automake libtool m4 `
