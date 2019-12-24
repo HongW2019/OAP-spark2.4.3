@@ -105,16 +105,17 @@ Now you can use beeline to test the Thrift JDBC/ODBC server, vsr211 is hostname,
 ```
 When ```0: jdbc:hive2://vsr211:10000> ``` shows up, then you can directly use table oap_test, which is stored in the `default` database.
 ```
-> show databases;
-> use default;
-> show tables;
-> use oap_test;
+> SHOW databases;
+> USE default;
+> SHOW tables;
+> USE oap_test;
 ```
 next you can run query like
 ```
 > SELECT * FROM oap_test WHERE a = 1;
 > SELECT * FROM oap_test WHERE a = 2;
 > SELECT * FROM oap_test WHERE a = 3;
+...
 ```
 Then you can find the cache metric with OAP TAB in the spark history Web UI.
 
@@ -147,14 +148,20 @@ spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the
 spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
 ```
+Here we privide you with an example, this cluster consists of 2 worker nodes, per node has 2 pieces of 488GB DCPMM ; 96 Vcores, 360GB Memory.  
 ![Spark configuration with DCPMM cache](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/spark-conf.png)
+
 You can also run Spark with the same following example to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
 ```
-. $SPARK_HOME/bin/spark-shell
-> spark.sql(s"""CREATE TEMPORARY TABLE oap_test (a INT, b STRING)
-      | USING parquet)
-      | OPTIONS (path 'hdfs:///<oap-data-dir>')""".stripMargin)
-> val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
-> spark.sql("insert overwrite table oap_test select * from t")
-> spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
+cd $SPARK_HOME/bin/
+. $SPARK_HOME/sbin/start-thriftserver.sh
+./beeline -u jdbc:hive2://vsr211:10000
+> SHOW databases;
+> USE default;
+> SHOW tables;
+> USE oap_test;
+> SELECT * FROM oap_test WHERE a = 1;
+> SELECT * FROM oap_test WHERE a = 2;
+> SELECT * FROM oap_test WHERE a = 3;
+...
 ```
