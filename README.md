@@ -121,7 +121,7 @@ Firstly you should change some configurations into `$SPARK_HOME/conf/spark-defau
 #### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
 ```
 spark.memory.offHeap.enabled                true
-spark.memory.offHeap.size                  <set a suitable size>
+spark.memory.offHeap.size                   80g      # half of total memory size
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
