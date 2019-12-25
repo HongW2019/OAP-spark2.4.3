@@ -49,7 +49,7 @@ When your Spark shell shows the same as below picture, it means you have run Spa
 
 ![Spark_shell_running_results](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/image/spark_shell_oap.png)
 
-## YARN Cluster and Spark Standalone Mode
+## Configurations for YARN Cluster and Spark Standalone Mode
 ### YARN Cluster mode
 There are two deploy modes that can be used to launch Spark applications on YARN, `client` and `cluster` mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
 #### Configurations on Spark with OAP on YARN Cluster Mode
@@ -78,7 +78,7 @@ spark.driver.extraClassPath        /home/oap/jars/oap-0.6-with-spark-2.3.2.jar  
 ```
 
 ## Working with OAP Index
-### Use Index with OAP on Spark
+
 You can use SQL DDL(create/drop/refresh/check/show index) to use OAP index functionality, run Spark with the following example to try OAP index function with Spark shell.
 ```
 . $SPARK_HOME/bin/spark-shell
