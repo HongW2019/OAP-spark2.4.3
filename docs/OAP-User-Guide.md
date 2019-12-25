@@ -36,7 +36,7 @@ After deployment and configuration, you can follow the steps to run Spark shell 
 > spark.sql("create oindex index1 on oap_test (a)")
 > spark.sql("show oindex from oap_test").show()
 ```
-when your Spark shell shows the same as below picture, it means you have start Spark with OAP successfully.
+when your Spark shell shows the same as below picture, it means you have run Spark with OAP successfully.
 ![Spark_shell_running_results](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/image/spark_shell_oap.png)
 
 ## YARN Cluster and Spark Standalone Mode
