@@ -15,7 +15,7 @@ Before getting started with OAP on Spark, you should have set up a working Hadoo
 ### Building OAP
 We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like to build OAP from source code, more details can be found at [OAP developer guide]().
 ### Configurations on Spark with OAP
-A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before we run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly we should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
+A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before we run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 
 ```
 spark.master                      yarn
@@ -26,13 +26,52 @@ spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                
 spark.driver.extraClassPath       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
 ```
 ![Spark-defaults.conf](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/Spark-conf-Dram-Cache.png)
-### Run Spark Shell 
-After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work.
-Step 1  `. $SPARK_HOME/bin/spark-shell`
-Step 2  
+### Run Spark with OAP 
+After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. 
 
-If failed to launch Spark with OAP, you need to check the logs to find the reason.
-## How to Use OAP
+```
+. $SPARK_HOME/bin/spark-shell
+> spark.sql(s"""CREATE TABLE oap_test (a INT, b STRING)
+       USING parquet
+       OPTIONS (path 'hdfs:///user/oap/')""".stripMargin)
+> val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
+> spark.sql("insert overwrite table oap_test select * from t")
+> spark.sql("create oindex index1 on oap_test (a)")
+> spark.sql("show oindex from oap_test").show()
+> spark.sql("drop oindex index1 on oap_test")
+```
+when your Spark shell shows the same as below picture, it means you have start Spark with OAP successfully.
+[Spark_shell_running_results]()
+
+## YARN Cluster and Spark Standalone Mode
+### YARN Cluster mode
+There are two deploy modes that can be used to launch Spark applications on YARN, `client` and `cluster` mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
+#### Configurations on Spark with OAP on YARN Cluster Mode
+Before run spark-submit, you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
+```
+spark.master                      yarn
+spark.deploy-mode                 cluster
+spark.sql.extensions              org.apache.spark.sql.OapExtensions
+spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path    
+spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
+spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
+```
+then you can run spark-submit with YARN cluster mode
+```
+.$SPARK_HOME/bin/spark-submit \
+  --master yarn \
+  --deploy-mode cluster \
+  ...
+```
+### Spark Standalone mode
+In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
+```
+spark.sql.extensions               org.apache.spark.sql.OapExtensions
+spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
+spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
+```
+
+## Working with OAP Index
 ### Use Index with OAP on Spark
 After you have start Hadoop and YRAN, you can run Spark with the following example to try OAP index function with Spark shell.
 ```
@@ -63,21 +102,7 @@ Drop index
 > spark.sql("drop oindex index1 on oap_test")
 ```
 For  more detailed examples on OAP performance comparation, you can refer to this [page](https://github.com/Intel-bigdata/OAP/wiki/OAP-examples) for further instructions.
-Alternatively, if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. 
-```
-spark.master                      yarn
-spark.deploy-mode                 cluster
-spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path    
-spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
-spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
-```
-In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
-```
-spark.sql.extensions               org.apache.spark.sql.OapExtensions
-spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
-spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
-```
+
 ## Working with OAP Cache
 
 If you want to run OAP with cache function, there are two media types in OAP to cache hot data: DRAM and DCPMM. To better
