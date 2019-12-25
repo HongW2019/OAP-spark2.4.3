@@ -1,6 +1,6 @@
 # OAP Usage Guide
 [![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
-Spark--
+
 * [OAP Architecture Overview](#OAP-Architecture-Overview)
 * [Prerequisites](#Prerequisites)
 * [Getting Started with OAP](#Getting-Started-with-OAP)
@@ -118,10 +118,11 @@ spark.memory.offHeap.size                  <set a suitable size>
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the following example to try OAP cache function with DRAM. We recommand you use Thrift server
-The Thrift JDBC/ODBC server implemented here corresponds to the HiveServer2 in Hive 1.2.1. You can test the JDBC server with the beeline script that comes with Spark.
-In the Working with OAP Index, we have create a table oap_test, next we will try OAP Cache.
-When we use ```spark-shell``` to create table oap_test, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so firstly we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
+You can run Spark with the following example to try OAP cache function with DRAM. You should use Thrift server with the beeline script to run Spark.
+#### Using DRAM Cache on table `oap_test`
+In the Working with OAP Index, we have create a table `oap_test`, next we will try OAP Cache.
+
+When we use ```spark-shell``` to create table oap_test, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
 ```
