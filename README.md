@@ -10,40 +10,27 @@
 * [OAP Developer Guide](#OAP_Developer_Guide)
 
 ## Prerequisites
-Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
+Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
 ## Getting Started with OAP
 ### Building OAP
-We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like build OAP from source code, more details can be found at [OAP developer guide] ().
-### Configuration on Spark with OAP
-There are two deploy modes that can be used to launch Spark applications on YARN. A common deployment strategy is to submit your application from a gateway machine that is physically co-located with your worker machines. In this setup, `client` mode is appropriate. In `client` mode, the driver is launched directly within the `spark-submit `process which acts as a client to the cluster. The input and output of the application is attached to the console. Thus, this mode is especially suitable for applications that involve the REPL (e.g. Spark shell).
+We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like to build OAP from source code, more details can be found at [OAP developer guide]().
+### Configurations on Spark with OAP
+A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before we run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly we should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 
-To make Spark with OAP run well in `client` mode , We list required configurations in `$SPARK_HOME/conf/spark-defaults.conf`
 ```
 spark.master                      yarn
 spark.deploy-mode                 client
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path  
-spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path
-spark.driver.extraClassPath       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path
+spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar  
+spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path of OAP jar
+spark.driver.extraClassPath       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
 ```
-
-
-In the following part, we will take `Spark on Yarn with Client Mode` for example to introduce you more configuration details to deploy Spark with OAP correctly.
-
-```
-spark.driver.memory
-spark.executor.cores                              # less than yarn.scheduler.maximum-allocation-vcores
-spark.executor.memory                             # less than yarn.scheduler.maximum-allocation-mb                              
-spark.yarn.executor.memoryOverhead                # close to spark.memory.offHeap.size
-spark.executor.instances                          # 1~2X of worker nodes         
-spark.memory.offHeap.enabled                      
-spark.memory.offHeap.size                         
-```
-Executor instances can be 1~2X of worker nodes. Considering the count of executor instances (N) on each node, executor memory can be around 1/N of each worker total available memory. Usually each worker has one or two executor instances. However, considering the cache utilization, one executor per worker node is recommended. Always enable offHeap memory and set a reasonable (the larger the better) size, as long as OAP's fine-grained cache takes advantage of offHeap memory, otherwise user might encounter weird circumstances.
-
 ![Spark-defaults.conf](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/Spark-conf-Dram-Cache.png)
+### Run Spark Shell 
+After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work.
+Step 1  `. $SPARK_HOME/bin/spark-shell`
+Step 2  
 
-After deployment and configuration, you can run by` bin/spark-sql, bin/spark-shell, bin/spark-submit, sbin/start-thriftserver or bin/pyspark. `
 If failed to launch Spark with OAP, you need to check the logs to find the reason.
 ## How to Use OAP
 ### Use Index with OAP on Spark
