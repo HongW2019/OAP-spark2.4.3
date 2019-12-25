@@ -150,10 +150,15 @@ Then you can find the cache metric with OAP TAB in the spark history Web UI.
 
 ### Use DCPMM to Cache with OAP 
 When you want to use DCPMM to cache hot data, you should follow the below steps.
+
 Step 1. You need have DCPMM formatted and mounted on your clusters.
+
 Step 2. Make libmemkind.so.0, libnuma.so.1 be accessed in each executor node. (Centos: /lib64/)
+
 Step 3. Install numactl by `yum install numactl -y `
+
 Step 4. Create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
+
 ```
 <persistentMemoryPool>
   <!--The numa id-->
