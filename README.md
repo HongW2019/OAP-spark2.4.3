@@ -83,7 +83,8 @@ You can use SQL DDL(create/drop/refresh/check/show index) to use OAP index funct
 ```
 . $SPARK_HOME/bin/spark-shell
 ```
-Then create a table on corresponding HDFS data path, here take our data path ```hdfs:///user/oap/```for example.
+### Index Creation
+create a table on corresponding HDFS data path, here take our data path ```hdfs:///user/oap/```for example.
 ```
 > spark.sql(s"""CREATE TABLE oap_test (a INT, b STRING)
        USING parquet
@@ -99,11 +100,11 @@ Next Create index with OAP Index on oap_test
 > spark.sql("create oindex index1 on oap_test (a)")
 > spark.sql("show oindex from oap_test").show()
 ```
-Use OAP Index
+### Use OAP Index
 ```
 > spark.sql("SELECT * FROM oap_test WHERE a = 1").show()
 ```
-Drop index
+### Drop index
 ```
 > spark.sql("drop oindex index1 on oap_test")
 ```
