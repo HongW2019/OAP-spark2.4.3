@@ -118,7 +118,7 @@ spark.memory.offHeap.size                  <set a suitable size>
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the following example to try OAP cache function with DRAM. You should use Thrift server with the beeline script to run Spark.
+You can run Spark with the following example to try OAP cache function with DRAM. You should use Thrift server with the beeline script to run Spark. Using Spark ***ThriftServer*** can unleash the power of OAP, because ThriftServer can launch a Spark Application which can cache hot data for long time in the background, and it also can accept query requests from different clients at the same time.
 #### Using DRAM Cache on table `oap_test`
 In the Working with OAP Index, we have create a table `oap_test`, next we will try OAP Cache.
 
