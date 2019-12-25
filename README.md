@@ -11,9 +11,6 @@
 
 ## Prerequisites
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
-### Building OAP
-OAP package Build
-We have a pre-built [OAP-0](), you can download to your master machine.
 ## Getting Started with OAP
 ### Building OAP
 We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like build OAP from source code, more details can be found at [OAP developer guide] ().
