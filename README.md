@@ -84,6 +84,7 @@ You can use SQL DDL(create/drop/refresh/check/show index) to use OAP index funct
 . $SPARK_HOME/bin/spark-shell
 ```
 ### Index Creation
+we use CREATE to create table
 create a table on corresponding HDFS data path, here take our data path ```hdfs:///user/oap/```for example.
 ```
 > spark.sql(s"""CREATE TABLE oap_test (a INT, b STRING)
@@ -112,8 +113,8 @@ For  more detailed examples on OAP performance comparation, you can refer to thi
 
 ## Working with OAP Cache
 
-If you want to run OAP with cache function, there are two media types in OAP to cache hot data: DRAM and DCPMM. To better
-firstly you should change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. 
+If you want to run OAP with cache function, there are two media types in OAP to cache hot data: DRAM and DCPMM. 
+Firstly you should change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. 
 ### Use DRAM to Cache with OAP
 
 
