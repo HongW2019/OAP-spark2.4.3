@@ -1,11 +1,13 @@
 # OAP Usage Guide
 [![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
 
+* [OAP Architecture Overview](#OAP_Architecture_Overview)
 * [Prerequisites](#Prerequisites)
-* [Getting Started with OAP](#Configuration)
+* [Getting Started with OAP](#Getting_Started_with_OAP)
 * [Cluster and Standalone Mode](#How_to_Use_OAP)
-* [Working with OAP Index](#)
-* [Working with OAP Cache](#)
+* [Working with OAP Index](#Working_with_OAP_Index)
+* [Working with OAP Cache](#Working_with_OAP_Cache)
+* [OAP Developer Guide](#OAP_Developer_Guide)
 
 ## Prerequisites
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built [Spark-2.3.2]().
