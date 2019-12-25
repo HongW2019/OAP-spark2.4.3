@@ -1,19 +1,22 @@
 # OAP Usage Guide
-[![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
 
-* [OAP Architecture Overview](#OAP_Architecture_Overview)
+
+* [OAP Architecture Overview](#OAP-Architecture-Overview)
 * [Prerequisites](#Prerequisites)
-* [Getting Started with OAP](#Getting_Started_with_OAP)
-* [Cluster and Standalone Mode](#How_to_Use_OAP)
-* [Working with OAP Index](#Working_with_OAP_Index)
-* [Working with OAP Cache](#Working_with_OAP_Cache)
-* [OAP Developer Guide](#OAP_Developer_Guide)
+* [Getting Started with OAP](#Getting-Started-with-OAP)
+* [YARN Cluster and Spark Standalone Mode](#YARN-Cluster-and-Spark-Standalone-Mode)
+* [Working with OAP Index](#Working-with-OAP-Index)
+* [Working with OAP Cache](#Working-with-OAP-Cache)
+* [Developer Guide](#Developer-Guide)
 
+
+## OAP Architecture Overview
+Refer to ![OAP Architecture Overview](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/OAP-Architect-Overview.md)
 ## Prerequisites
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
 ## Getting Started with OAP
 ### Building OAP
-We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like to build OAP from source code, more details can be found at [OAP developer guide]().
+We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like to build OAP from source code, more details can be found at [Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md).
 ### Configurations on Spark with OAP
 A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before we run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 
@@ -26,7 +29,7 @@ spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                
 spark.driver.extraClassPath       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
 ```
 ### Run Spark with OAP 
-After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. 
+After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. Here take our data path hdfs:///user/oap/for example, you can change to yours.
 
 ```
 . $SPARK_HOME/bin/spark-shell
@@ -37,10 +40,9 @@ After deployment and configuration, you can follow the steps to run Spark shell 
 > spark.sql("insert overwrite table oap_test select * from t")
 > spark.sql("create oindex index1 on oap_test (a)")
 > spark.sql("show oindex from oap_test").show()
-> spark.sql("drop oindex index1 on oap_test")
 ```
 when your Spark shell shows the same as below picture, it means you have start Spark with OAP successfully.
-[Spark_shell_running_results]()
+![Spark_shell_running_results](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/image/spark_shell_oap.png)
 
 ## YARN Cluster and Spark Standalone Mode
 ### YARN Cluster mode
@@ -51,7 +53,7 @@ Before run spark-submit, you should add OAP configurations in the file of `$SPAR
 spark.master                      yarn
 spark.deploy-mode                 cluster
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar     # absolute path    
+spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path    
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
@@ -72,7 +74,7 @@ spark.driver.extraClassPath        /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar   
 
 ## Working with OAP Index
 ### Use Index with OAP on Spark
-After you have start Hadoop and YRAN, you can run Spark with the following example to try OAP index function with Spark shell.
+You can use SQL DDL(create/drop/refresh/check/show index) to use OAP index functionality, run Spark with the following example to try OAP index function with Spark shell.
 ```
 . $SPARK_HOME/bin/spark-shell
 ```
@@ -82,12 +84,12 @@ Then create a table on corresponding HDFS data path, here take our data path ```
        USING parquet
        OPTIONS (path 'hdfs:///user/oap/')""".stripMargin)
 ```
-
+Next you write data into table oap_test.
 ```
 > val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
 ```
-Create index with OAP Index
+Next Create index with OAP Index on oap_test
 ```
 > spark.sql("create oindex index1 on oap_test (a)")
 > spark.sql("show oindex from oap_test").show()
@@ -116,10 +118,11 @@ spark.memory.offHeap.size                  <set a suitable size>
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the following example to try OAP cache function with DRAM. We recommand you use Thrift server
-The Thrift JDBC/ODBC server implemented here corresponds to the HiveServer2 in Hive 1.2.1. You can test the JDBC server with the beeline script that comes with Spark.
-In the [Index](#Use Index with OAP on Spark) part, we have create a table oap_test, next we will try OAP Cache.
-When we use ```spark-shell``` to create table oap_test, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so firstly we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
+You can run Spark with the following example to try OAP cache function with DRAM. You should use Spark ***ThriftServer***  with the beeline script to run Spark, cause ThriftServer can launch a Spark Application which can cache hot data for long time in the background, and it also can accept query requests from different clients at the same time.
+#### Using DRAM Cache on table `oap_test`
+In the Working with OAP Index, we have create a table `oap_test`, next we will try OAP Cache.
+
+When we use ```spark-shell``` to create table oap_test, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
 ```
@@ -148,8 +151,16 @@ Then you can find the cache metric with OAP TAB in the spark history Web UI.
 
 
 ### Use DCPMM to Cache with OAP 
-When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind `
-Then you need create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
+When you want to use DCPMM to cache hot data, you should follow the below steps.
+
+Step 1. You need have DCPMM formatted and mounted on your clusters.
+
+Step 2. Make libmemkind.so.0, libnuma.so.1 be accessed in each executor node. (Centos: /lib64/)
+
+Step 3. Install numactl by `yum install numactl -y `
+
+Step 4. Create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
+
 ```
 <persistentMemoryPool>
   <!--The numa id-->
@@ -163,32 +174,20 @@ Then you need create a file named “persistent-memory.xml” under "$SPARK_HOME
 </persistentMemoryPool>
 ```
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
+Here we privide you with an example, this cluster consists of 2 worker nodes, per node has 2 pieces of 488GB DCPMM ; 
 ```
-spark.executor.instances                                  <2X of worker nodes>
+spark.executor.instances                                   4               # 2x of number of your worker nodes
 spark.yarn.numa.enabled                                    true            # enable numa
 spark.executorEnv.MEMKIND_ARENA_NUM_PER_KIND               1
 spark.memory.offHeap.enabled                               false
 spark.speculation                                          false
 spark.sql.oap.fiberCache.memory.manager                    pm              # use DCPMM as cache media
-spark.sql.oap.fiberCache.persistent.memory.initial.size                    # ~total available DCPMM per executor
-spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the left DCPMM per executor
+spark.sql.oap.fiberCache.persistent.memory.initial.size    450g            # ~90% of total available DCPMM per executor
+spark.sql.oap.fiberCache.persistent.memory.reserved.size   30g             # the left DCPMM per executor
 spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
 ```
-Here we privide you with an example, this cluster consists of 2 worker nodes, per node has 2 pieces of 488GB DCPMM ; 96 Vcores, 360GB Memory.  
-![Spark configuration with DCPMM cache](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/spark-conf.png)
+You can also run Spark with the same following example as DRAM cache to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
 
-You can also run Spark with the same following example to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
-```
-cd $SPARK_HOME/bin/
-. $SPARK_HOME/sbin/start-thriftserver.sh
-./beeline -u jdbc:hive2://vsr211:10000
-> SHOW databases;
-> USE default;
-> SHOW tables;
-> USE oap_test;
-> SELECT * FROM oap_test WHERE a = 1;
-> SELECT * FROM oap_test WHERE a = 2;
-> SELECT * FROM oap_test WHERE a = 3;
-...
-```
+## Developer Guide 
+Refer to ![Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md)
