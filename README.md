@@ -202,4 +202,4 @@ cd $SPARK_HOME/bin/
 ...
 ```
 ## Developer Guide 
-Refer to ![Develop Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md)
+Refer to ![Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md)
