@@ -29,7 +29,7 @@ spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                
 spark.driver.extraClassPath       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
 ```
 ### Run Spark with OAP 
-After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. 
+After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. Here take our data path hdfs:///user/oap/for example, you can change to yours.
 
 ```
 . $SPARK_HOME/bin/spark-shell
@@ -74,7 +74,7 @@ spark.driver.extraClassPath        /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar   
 
 ## Working with OAP Index
 ### Use Index with OAP on Spark
-After you have start Hadoop and YRAN, you can run Spark with the following example to try OAP index function with Spark shell.
+You can use SQL DDL(create/drop/refresh/check/show index) to use OAP index functionality, run Spark with the following example to try OAP index function with Spark shell.
 ```
 . $SPARK_HOME/bin/spark-shell
 ```
@@ -84,12 +84,12 @@ Then create a table on corresponding HDFS data path, here take our data path ```
        USING parquet
        OPTIONS (path 'hdfs:///user/oap/')""".stripMargin)
 ```
-
+Next you write data into table oap_test.
 ```
 > val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
 ```
-Create index with OAP Index
+Next Create index with OAP Index on oap_test
 ```
 > spark.sql("create oindex index1 on oap_test (a)")
 > spark.sql("show oindex from oap_test").show()
