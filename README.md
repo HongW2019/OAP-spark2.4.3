@@ -4,7 +4,7 @@
 * [OAP Architecture Overview](#OAP-Architecture-Overview)
 * [Prerequisites](#Prerequisites)
 * [Getting Started with OAP](#Getting-Started-with-OAP)
-* [Cluster and Standalone Mode](#Cluster-and-Standalone-Mode)
+* [YARN Cluster and Spark Standalone Mode](#YARN-Cluster-and-Standalone-Mode)
 * [Working with OAP Index](#Working-with-OAP-Index)
 * [Working with OAP Cache](#Working-with-OAP-Cache)
 * [Developer Guide](#Developer-Guide)
