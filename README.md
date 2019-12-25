@@ -1,14 +1,14 @@
 # OAP Usage Guide
 [![Build Status](https://travis-ci.org/Intel-bigdata/OAP.svg?branch=master)](https://travis-ci.org/Intel-bigdata/OAP)
 
-* [OAP Architecture Overview](#OAP_Architecture_Overview)
+* [OAP Architecture Overview](#OAP-Architecture-Overview)
 * [Prerequisites](#Prerequisites)
-* [Getting Started with OAP](#Getting_Started_with_OAP)
-* [Cluster and Standalone Mode](#How_to_Use_OAP)
-* [Working with OAP Index](#Working_with_OAP_Index)
-* [Working with OAP Cache](#Working_with_OAP_Cache)
-* [Developer Guide](#Developer_Guide)
-* [Developer Guide](#Developer_Guide)
+* [Getting Started with OAP](#Getting-Started-with-OAP)
+* [Cluster and Standalone Mode](#How-to-Use-OAP)
+* [Working with OAP Index](#Working-with-OAP-Index)
+* [Working with OAP Cache](#Working-with-OAP-Cache)
+* [Developer Guide](#Developer-Guide)
+* [Developer Guide](#Developer-Guide)
 
 ## OAP Architecture Overview
 Refer to ![OAP Architecture Overview](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/OAP-Architect-Overview.md)
