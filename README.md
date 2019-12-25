@@ -7,7 +7,7 @@
 * [Cluster and Standalone Mode](#How_to_Use_OAP)
 * [Working with OAP Index](#Working_with_OAP_Index)
 * [Working with OAP Cache](#Working_with_OAP_Cache)
-* [OAP Developer Guide](#Developer_Guide)
+* [Developer Guide](#Developer_Guide)
 
 ## OAP Architecture Overview
 Refer to ![OAP Architecture Overview](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/OAP-Architect-Overview.md)
