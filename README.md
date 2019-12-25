@@ -25,7 +25,6 @@ spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar    
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path of OAP jar
 spark.driver.extraClassPath       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
 ```
-![Spark-defaults.conf](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/Spark-conf-Dram-Cache.png)
 ### Run Spark with OAP 
 After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. 
 
