@@ -117,7 +117,7 @@ spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
 You can run Spark with the following example to try OAP cache function with DRAM. We recommand you use Thrift server
 The Thrift JDBC/ODBC server implemented here corresponds to the HiveServer2 in Hive 1.2.1. You can test the JDBC server with the beeline script that comes with Spark.
-In the [Index](#Use Index with OAP on Spark) part, we have create a table oap_test, next we will try OAP Cache.
+In the Working with OAP Index, we have create a table oap_test, next we will try OAP Cache.
 When we use ```spark-shell``` to create table oap_test, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so firstly we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
@@ -147,8 +147,11 @@ Then you can find the cache metric with OAP TAB in the spark history Web UI.
 
 
 ### Use DCPMM to Cache with OAP 
-When you want to use DCPMM to cache hot data, firstly you need have DCPMM formatted and mounted on your clusters, and have installed the following requied packages like `numactl numactl-devel memkind `
-Then you need create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
+When you want to use DCPMM to cache hot data, you should follow the below steps.
+Step 1. You need have DCPMM formatted and mounted on your clusters.
+Step 2. Make libmemkind.so.0, libnuma.so.1 be accessed in each executor node. (Centos: /lib64/)
+Step 3. Install numactl by `yum install numactl -y `
+Step 4. Create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
 ```
 <persistentMemoryPool>
   <!--The numa id-->
@@ -163,14 +166,14 @@ Then you need create a file named “persistent-memory.xml” under "$SPARK_HOME
 ```
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
 ```
-spark.executor.instances                                  <2X of worker nodes>
+spark.executor.instances                                   4               # 2x of number of your worker nodes
 spark.yarn.numa.enabled                                    true            # enable numa
 spark.executorEnv.MEMKIND_ARENA_NUM_PER_KIND               1
 spark.memory.offHeap.enabled                               false
 spark.speculation                                          false
 spark.sql.oap.fiberCache.memory.manager                    pm              # use DCPMM as cache media
-spark.sql.oap.fiberCache.persistent.memory.initial.size                    # ~total available DCPMM per executor
-spark.sql.oap.fiberCache.persistent.memory.reserved.size                   # the left DCPMM per executor
+spark.sql.oap.fiberCache.persistent.memory.initial.size    450g            # ~90% of total available DCPMM per executor
+spark.sql.oap.fiberCache.persistent.memory.reserved.size   30g             # the left DCPMM per executor
 spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
 ```
