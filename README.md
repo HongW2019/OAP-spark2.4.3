@@ -40,7 +40,7 @@ After deployment and configuration, you can follow the steps to run Spark shell 
 > spark.sql("drop oindex index1 on oap_test")
 ```
 when your Spark shell shows the same as below picture, it means you have start Spark with OAP successfully.
-[Spark_shell_running_results]()
+[Spark_shell_running_results](./image/spark_shell_oap.png)
 
 ## YARN Cluster and Spark Standalone Mode
 ### YARN Cluster mode
@@ -51,7 +51,7 @@ Before run spark-submit, you should add OAP configurations in the file of `$SPAR
 spark.master                      yarn
 spark.deploy-mode                 cluster
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar     # absolute path    
+spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path    
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
