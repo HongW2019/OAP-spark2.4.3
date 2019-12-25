@@ -17,8 +17,8 @@ Before getting started with OAP on Spark, you should have set up a working Hadoo
 ## Getting Started with OAP
 ### Building OAP
 We have a pre-built OAP, you can download [OAP-0.6.1.jar]() to your master and put the OAP jar to directory `/home/oap/jars/`. If you’d like to build OAP from source code, please refer to [Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md).
-### Configurations on Spark with OAP
-A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before we run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
+### Spark Configurations for OAP
+A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before you run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 
 ```
 spark.master                      yarn
