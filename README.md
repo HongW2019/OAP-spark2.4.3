@@ -127,7 +127,8 @@ spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
 You can run Spark with the following example to try OAP cache function with DRAM. You should use Spark ***ThriftServer***  with the beeline script to run Spark, cause ThriftServer can launch a Spark Application which can cache hot data for long time in the background, and it also can accept query requests from different clients at the same time.
 #### Using DRAM Cache on table `oap_test`
-In the Working with OAP Index, we have create a table `oap_test`, next we will try OAP Cache.
+To verify DRAM Cache function, we reuse table `oap_test`
+In the [Working with OAP Index], we have create a table `oap_test`, next we will try OAP Cache.
 
 When we use ```spark-shell``` to create table oap_test, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
@@ -157,7 +158,8 @@ Then you can find the cache metric with OAP TAB in the spark history Web UI.
 
 
 
-### Use DCPMM to Cache with OAP 
+### Use DCPMM Cache 
+#### Prerequisites
 When you want to use DCPMM to cache hot data, you should follow the below steps.
 
 Step 1. You need have DCPMM formatted and mounted on your clusters.
