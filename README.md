@@ -16,7 +16,7 @@ Refer to ![OAP Architecture Overview](https://github.com/HongW2019/OAP-spark2.4.
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
 ## Getting Started with OAP
 ### Building OAP
-We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as `/home/oap/jars`. If you’d like to build OAP from source code, more details can be found at [Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md).
+We have a pre-built OAP, you can download [OAP-0.6.1.jar]() to your master and put the OAP jar to directory `/home/oap/jars/`. If you’d like to build OAP from source code, please refer to [Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md).
 ### Configurations on Spark with OAP
 A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before we run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 
@@ -24,9 +24,9 @@ A common deploy mode that can be used to launch Spark applications on YRAN is `c
 spark.master                      yarn
 spark.deploy-mode                 client
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar  
+spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar  
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path of OAP jar
-spark.driver.extraClassPath       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
+spark.driver.extraClassPath       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
 ```
 ### Run Spark with OAP 
 After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. Here take our data path `hdfs:///user/oap/` for example, you can change to yours.
@@ -53,7 +53,7 @@ Before run spark-submit, you should add OAP configurations in the file of `$SPAR
 spark.master                      yarn
 spark.deploy-mode                 cluster
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path    
+spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path    
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
@@ -68,8 +68,8 @@ then you can run spark-submit with YARN cluster mode
 In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
 ```
 spark.sql.extensions               org.apache.spark.sql.OapExtensions
-spark.executor.extraClassPath      /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
-spark.driver.extraClassPath        /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
+spark.executor.extraClassPath      /home/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
+spark.driver.extraClassPath        /home/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
 ```
 
 ## Working with OAP Index
