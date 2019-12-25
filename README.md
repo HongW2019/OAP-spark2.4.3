@@ -15,7 +15,7 @@ Refer to ![OAP Architecture Overview](https://github.com/HongW2019/OAP-spark2.4.
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
 ## Getting Started with OAP
 ### Building OAP
-We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like to build OAP from source code, more details can be found at [OAP developer guide]().
+We have a pre-built OAP, you can download it from this [page]() to your master machine and unzip it to a given path such as “/opt/oap/jars/”. If you’d like to build OAP from source code, more details can be found at [Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md).
 ### Configurations on Spark with OAP
 A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before we run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 
@@ -201,3 +201,5 @@ cd $SPARK_HOME/bin/
 > SELECT * FROM oap_test WHERE a = 3;
 ...
 ```
+## Developer Guide 
+Refer to ![Develop Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md)
