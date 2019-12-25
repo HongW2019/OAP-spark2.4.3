@@ -1,17 +1,12 @@
-# OAP Usage Guide
+# OAP User Guide
 
-
-* [OAP Architecture Overview](#OAP-Architecture-Overview)
 * [Prerequisites](#Prerequisites)
 * [Getting Started with OAP](#Getting-Started-with-OAP)
 * [YARN Cluster and Spark Standalone Mode](#YARN-Cluster-and-Spark-Standalone-Mode)
 * [Working with OAP Index](#Working-with-OAP-Index)
 * [Working with OAP Cache](#Working-with-OAP-Cache)
-* [Developer Guide](#Developer-Guide)
 
 
-## OAP Architecture Overview
-Refer to ![OAP Architecture Overview](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/OAP-Architect-Overview.md)
 ## Prerequisites
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
 ## Getting Started with OAP
@@ -189,5 +184,4 @@ spark.sql.oap.orc.data.cache.enable                        true            # for
 ```
 You can also run Spark with the same following example as DRAM cache to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
 
-## Developer Guide 
-Refer to ![Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md)
+
