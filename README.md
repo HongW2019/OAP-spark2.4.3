@@ -51,7 +51,7 @@ Before run spark-submit, you should add OAP configurations in the file of `$SPAR
 spark.master                      yarn
 spark.deploy-mode                 cluster
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar     # absolute path    
+spark.files                       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar     # absolute path    
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
@@ -66,8 +66,8 @@ then you can run spark-submit with YARN cluster mode
 In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
 ```
 spark.sql.extensions               org.apache.spark.sql.OapExtensions
-spark.executor.extraClassPath      /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
-spark.driver.extraClassPath        /<PATH_TO_OAP_JAR>/oap-0.6-with-spark-2.3.2.jar    # absolute path
+spark.executor.extraClassPath      /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
+spark.driver.extraClassPath        /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
 ```
 
 ## Working with OAP Index
