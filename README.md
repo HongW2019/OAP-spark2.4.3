@@ -173,6 +173,7 @@ Step 4. Create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/
 </persistentMemoryPool>
 ```
 #### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
+Here we privide you with an example, this cluster consists of 2 worker nodes, per node has 2 pieces of 488GB DCPMM ; 
 ```
 spark.executor.instances                                   4               # 2x of number of your worker nodes
 spark.yarn.numa.enabled                                    true            # enable numa
@@ -185,22 +186,7 @@ spark.sql.oap.fiberCache.persistent.memory.reserved.size   30g             # the
 spark.sql.oap.parquet.data.cache.enable                    true            # for parquet fileformat
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
 ```
-Here we privide you with an example, this cluster consists of 2 worker nodes, per node has 2 pieces of 488GB DCPMM ; 96 Vcores, 360GB Memory.  
-![Spark configuration with DCPMM cache](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/spark-conf.png)
+You can also run Spark with the same following example as DRAM cache to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
 
-You can also run Spark with the same following example to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
-```
-cd $SPARK_HOME/bin/
-. $SPARK_HOME/sbin/start-thriftserver.sh
-./beeline -u jdbc:hive2://vsr211:10000
-> SHOW databases;
-> USE default;
-> SHOW tables;
-> USE oap_test;
-> SELECT * FROM oap_test WHERE a = 1;
-> SELECT * FROM oap_test WHERE a = 2;
-> SELECT * FROM oap_test WHERE a = 3;
-...
-```
 ## Developer Guide 
 Refer to ![Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md)
