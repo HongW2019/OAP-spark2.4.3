@@ -29,7 +29,7 @@ spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                
 spark.driver.extraClassPath       /opt/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
 ```
 ### Run Spark with OAP 
-After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. Here take our data path hdfs:///user/oap/for example, you can change to yours.
+After deployment and configuration, you can follow the steps to run Spark shell and check if OAP configurations work. Here take our data path `hdfs:///user/oap/` for example, you can change to yours.
 
 ```
 . $SPARK_HOME/bin/spark-shell
