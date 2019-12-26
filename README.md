@@ -12,7 +12,7 @@
 
 ## OAP Architecture Overview
 Refer to ![OAP Architecture Overview](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/OAP-Architect-Overview.md)
-![OAP-OVERVIEW](./docs//docs/OAP-Architect-Overview.md)
+![OAP-OVERVIEW](./docs/OAP-Architect-Overview.md)
 ## Prerequisites
 Before getting started with OAP on Spark, you should have set up a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark which is built with YARN support. If you don't want to build Spark by yourself, we have a pre-built Spark-2.3.2, you can download Spark-2.3.2 from this [page]() to your master machine and unzip it to a given path. 
 ## Getting Started with OAP
