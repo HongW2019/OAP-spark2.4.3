@@ -166,7 +166,7 @@ Step 1. You need have DCPMM formatted and mounted on your clusters.
 Step 2. Download [libmemkind.so.0](https://github.com/Intel-bigdata/OAP/releases/download/v0.6.0-spark-2.3.2/libmemkind.so.0), [libnuma.so.1](https://github.com/Intel-bigdata/OAP/releases/download/v0.6.0-spark-2.3.2/libnuma.so.1) to directory `/lib64/`(Centos) in each executor node.
 ##### Achieve NUMA binding
 Step 3. Install numactl by `yum install numactl -y ` to achieve NUMA binding
-##### Configuration for DCPMM 
+##### Configurations for DCPMM 
 Step 4. Create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/" and set the “initialPath” of numa node in “persistent-memory.xml”. You can directly copy the following part only changing `/mnt/pmem0` `/mnt/pmem1` to your path to DCPMM.
 
 ```
@@ -181,7 +181,7 @@ Step 4. Create a file named “persistent-memory.xml” under "$SPARK_HOME/conf/
   </numanode>
 </persistentMemoryPool>
 ```
-#### DCPMM Cache configuration in `$SPARK_HOME/conf/spark-defaults.conf`
+
 Here we privide you with an example, this cluster consists of 2 worker nodes, per node has 2 pieces of 488GB DCPMM ; 
 ```
 spark.executor.instances                                   4               # 2x of number of your worker nodes
