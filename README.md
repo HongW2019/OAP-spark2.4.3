@@ -45,8 +45,8 @@ When your Spark shell shows the same as below picture, it means you have run Spa
 ![Spark_shell_running_results](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/image/spark_shell_oap.png)
 
 ## Configurations for YARN Cluster and Spark Standalone Mode
-### YARN Cluster mode
-There are two deploy modes that can be used to launch Spark applications on YARN, ***client***and ***cluster*** mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
+### YARN Cluster Mode
+There are two deploy modes that can be used to launch Spark applications on YARN, ***client*** and ***cluster*** mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
 #### Configurations on Spark with OAP on YARN Cluster Mode
 Before run spark-submit, you should add below OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 ```
