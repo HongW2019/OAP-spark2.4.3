@@ -12,7 +12,7 @@ Before getting started with OAP on Spark, you should have set up a working Hadoo
 ### Building OAP
 We have a pre-built OAP, you can download [OAP-0.6.1.jar]() to your master and put the OAP jar to directory such as `/home/oap/jars/`. If you’d like to build OAP from source code, please refer to [Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md).
 ### Spark Configurations for OAP
-A common deploy mode that can be used to launch Spark applications on YRAN is `client` mode. The `client` mode is especially suitable for applications such as Spark shell. Before you run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add the following configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
+A common deploy mode that can be used to launch Spark applications on YRAN is ***client*** mode. The ***client*** mode is especially suitable for applications such as Spark shell. Before you run ` . $SPARK_HOME/bin/spark-shell ` to launch Spark, firstly you should add the following configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 
 ```
 spark.master                      yarn
@@ -46,7 +46,7 @@ When your Spark shell shows the same as below picture, it means you have run Spa
 
 ## Configurations for YARN Cluster and Spark Standalone Mode
 ### YARN Cluster mode
-There are two deploy modes that can be used to launch Spark applications on YARN, **client** and **cluster** mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
+There are two deploy modes that can be used to launch Spark applications on YARN, ***client***and ***cluster*** mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
 #### Configurations on Spark with OAP on YARN Cluster Mode
 Before run spark-submit, you should add below OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 ```
