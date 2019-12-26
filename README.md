@@ -24,6 +24,7 @@ spark.driver.extraClassPath       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar   
 ```
 ### Verify Spark with OAP Integration 
 After configuration, you can follow the below steps to run Spark shell and check if OAP configurations work. Here take data path `hdfs:///user/oap/` for example.
+
 Step 1. mkdir data path on HDFS
 ```
 hadoop fs -mkdir /user/oap/
