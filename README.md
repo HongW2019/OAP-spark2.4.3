@@ -18,9 +18,9 @@ A common deploy mode that can be used to launch Spark applications on YRAN is `c
 spark.master                      yarn
 spark.deploy-mode                 client
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar        # absolute path of OAP jar  
-spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                     # relative path of OAP jar
-spark.driver.extraClassPath       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar        # absolute path of OAP jar
+spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar     # absolute path of OAP jar  
+spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                  # relative path of OAP jar
+spark.driver.extraClassPath       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar     # absolute path of OAP jar
 ```
 ### Verify Spark with OAP Integration 
 After configuration, you can follow the below steps to run Spark shell and check if OAP configurations work. Here take data path `hdfs:///user/oap/` for example.
@@ -46,16 +46,16 @@ When your Spark shell shows the same as below picture, it means you have run Spa
 
 ## Configurations for YARN Cluster and Spark Standalone Mode
 ### YARN Cluster mode
-There are two deploy modes that can be used to launch Spark applications on YARN, `client` and `cluster` mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
+There are two deploy modes that can be used to launch Spark applications on YARN, **client** and **cluster** mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
 #### Configurations on Spark with OAP on YARN Cluster Mode
 Before run spark-submit, you should add below OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 ```
 spark.master                      yarn
 spark.deploy-mode                 cluster
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar         # absolute path    
-spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
-spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
+spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar        # absolute path    
+spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                     # relative path 
+spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                     # relative path
 ```
 then you can run spark-submit with YARN cluster mode
 ```
@@ -68,8 +68,8 @@ then you can run spark-submit with YARN cluster mode
 In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
 ```
 spark.sql.extensions               org.apache.spark.sql.OapExtensions
-spark.executor.extraClassPath      /home/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
-spark.driver.extraClassPath        /home/oap/jars/oap-0.6-with-spark-2.3.2.jar    # absolute path
+spark.executor.extraClassPath      /home/oap/jars/oap-0.6-with-spark-2.3.2.jar      # absolute path
+spark.driver.extraClassPath        /home/oap/jars/oap-0.6-with-spark-2.3.2.jar      # absolute path
 ```
 
 ## Working with OAP Index
