@@ -112,7 +112,6 @@ If you want to run OAP with cache function, there are two media types in OAP to 
 ### Use DRAM Cache 
 Step 1. Change some configurations in `$SPARK_HOME/conf/spark-defaults.conf`. 
 
-#### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
 ```
 spark.memory.offHeap.enabled                true
 spark.memory.offHeap.size                   80g      # half of total memory size
