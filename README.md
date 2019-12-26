@@ -18,9 +18,9 @@ A common deploy mode that can be used to launch Spark applications on YRAN is `c
 spark.master                      yarn
 spark.deploy-mode                 client
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar  
-spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path of OAP jar
-spark.driver.extraClassPath       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path of OAP jar
+spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar        # absolute path of OAP jar  
+spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                     # relative path of OAP jar
+spark.driver.extraClassPath       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar        # absolute path of OAP jar
 ```
 ### Verify Spark with OAP Integration 
 After configuration, you can follow the below steps to run Spark shell and check if OAP configurations work. Here take data path `hdfs:///user/oap/` for example.
@@ -48,18 +48,18 @@ When your Spark shell shows the same as below picture, it means you have run Spa
 ### YARN Cluster mode
 There are two deploy modes that can be used to launch Spark applications on YARN, `client` and `cluster` mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
 #### Configurations on Spark with OAP on YARN Cluster Mode
-Before run spark-submit, you should add OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
+Before run spark-submit, you should add below OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 ```
 spark.master                      yarn
 spark.deploy-mode                 cluster
 spark.sql.extensions              org.apache.spark.sql.OapExtensions
-spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar          # absolute path    
+spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar         # absolute path    
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                      # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                      # relative path
 ```
 then you can run spark-submit with YARN cluster mode
 ```
-.$SPARK_HOME/bin/spark-submit \
+. $SPARK_HOME/bin/spark-submit \
   --master yarn \
   --deploy-mode cluster \
   ...
@@ -74,24 +74,23 @@ spark.driver.extraClassPath        /home/oap/jars/oap-0.6-with-spark-2.3.2.jar  
 
 ## Working with OAP Index
 
-You can use SQL DDL(create/drop/refresh/check/show index) to use OAP index functionality, run Spark with the following example to try OAP index function with Spark shell.
+You can use SQL DDL(create/drop/refresh/check/show index) to try OAP index functionality, run Spark with the following example to try OAP index function with Spark shell.
 ```
 . $SPARK_HOME/bin/spark-shell
 ```
 ### Index Creation
-we use CREATE to create table
-create a table on corresponding HDFS data path, here take our data path ```hdfs:///user/oap/```for example.
+Step 1. Use `CREATE` to create a table with `parquet` file format on corresponding HDFS data path `hdfs:///user/oap/`.
 ```
 > spark.sql(s"""CREATE TABLE oap_test (a INT, b STRING)
        USING parquet
        OPTIONS (path 'hdfs:///user/oap/')""".stripMargin)
 ```
-Next you write data into table oap_test.
+Step 2. Insert data into table oap_test.
 ```
 > val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
 ```
-Next Create index with OAP Index on oap_test
+Step 3. Create index with OAP on `oap_test`
 ```
 > spark.sql("create oindex index1 on oap_test (a)")
 > spark.sql("show oindex from oap_test").show()
@@ -192,6 +191,3 @@ spark.sql.oap.parquet.data.cache.enable                    true            # for
 spark.sql.oap.orc.data.cache.enable                        true            # for orc fileformat
 ```
 You can also run Spark with the same following example as DRAM cache to try OAP cache function with DCPMM, then you can find the cache metric with OAP TAB in the spark history Web UI.
-
-## Developer Guide 
-Refer to ![Developer Guide](https://github.com/HongW2019/OAP-spark2.4.3/blob/master/docs/Developer-Guide.md)
