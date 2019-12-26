@@ -125,7 +125,7 @@ You should run Spark ***ThriftServer*** with the beeline scripts to use OAP DRAM
 
 To directly verify DRAM Cache function, we reuse table `oap_test` created in the [Working with OAP Index](#Working-with-OAP-Index).
 
-When we run ```spark-shell``` to create table `oap_test`, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
+When we run ```spark-shell``` to create table `oap_test`, `metastore_db` will be created, so we need to run Thrift JDBC server in the same directory of `metastore`.
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
 ```
