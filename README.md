@@ -46,9 +46,9 @@ When your Spark shell shows the same as below picture, it means you have run Spa
 
 ## Configurations for YARN Cluster and Spark Standalone Mode
 ### YARN Cluster Mode
-There are two deploy modes that can be used to launch Spark applications on YARN, ***client*** and ***cluster*** mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use `cluster` mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
+There are two deploy modes that can be used to launch Spark applications on YARN, ***client*** and ***cluster*** mode. if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to use ***cluster*** mode to minimize network latency between the drivers and the executors. Launching Applications with spark-submit can support different deploy modes that Spark supports, so you can run spark-submit to use YARN cluster mode.
 #### Configurations on Spark with OAP on YARN Cluster Mode
-Before run spark-submit, you should add below OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
+Before run `spark-submit`, you should add below OAP configurations in the file of `$SPARK_HOME/conf/spark-defaults.conf`
 ```
 spark.master                      yarn
 spark.deploy-mode                 cluster
@@ -57,14 +57,14 @@ spark.files                       /home/oap/jars/oap-0.6-with-spark-2.3.2.jar   
 spark.executor.extraClassPath     ./oap-0.6-with-spark-2.3.2.jar                     # relative path 
 spark.driver.extraClassPath       ./oap-0.6-with-spark-2.3.2.jar                     # relative path
 ```
-then you can run spark-submit with YARN cluster mode
+then you can run `spark-submit` with YARN cluster mode
 ```
 . $SPARK_HOME/bin/spark-submit \
   --master yarn \
   --deploy-mode cluster \
   ...
 ```
-### Spark Standalone mode
+### Spark Standalone Mode
 In addition to running on the YARN cluster managers, Spark also provides a simple standalone deploy mode. If install `Spark Standalone mode`, you simply place a compiled version of Spark and OAP on each node on the cluster.
 ```
 spark.sql.extensions               org.apache.spark.sql.OapExtensions
@@ -110,7 +110,7 @@ For  more detailed examples on OAP performance comparation, you can refer to thi
 If you want to run OAP with cache function, there are two media types in OAP to cache hot data: DRAM and DCPMM. 
 
 ### Use DRAM Cache 
-Step 1. change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. 
+Step 1. Change some configurations in `$SPARK_HOME/conf/spark-defaults.conf`. 
 
 #### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
 ```
@@ -120,26 +120,31 @@ spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
 Step 2. Run Spark ***ThriftServer***
+
 You should run Spark ***ThriftServer*** with the beeline scripts to use OAP DRAM cache, ThriftServer launchs Spark applications which can cache hot data for a long time backstage, and it can also accept query requests from different clients at the same time.
-#### Using DRAM Cache on table `oap_test`
+
 To directly verify DRAM Cache function, we reuse table `oap_test` created in the [Working with OAP Index](#Working-with-OAP-Index).
 
 When we run ```spark-shell``` to create table `oap_test`, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
 ```
-Now you can use beeline to test the ThriftSpark ***ThriftServer*** JDBC/ODBC server, vsr211 is hostname, so you need change to your hostname.
+Step3. Use beeline and Connect to the JDBC/ODBC server in beeline with:
+
 ```
 ./beeline -u jdbc:hive2://vsr211:10000       
 ```
-When ```0: jdbc:hive2://vsr211:10000> ``` shows up, then you can directly use table oap_test, which is stored in the `default` database.
+vsr211 is hostname, so you need change to your hostname.
+ 
+Step 4. Using DRAM Cache on table `oap_test`
+When ***0: jdbc:hive2://vsr211:10000>*** shows up, then you can directly use table oap_test, which is stored in the `default` database.
 ```
 > SHOW databases;
 > USE default;
 > SHOW tables;
 > USE oap_test;
 ```
-next you can run query like
+Step 5. Run query like
 ```
 > SELECT * FROM oap_test WHERE a = 1;
 > SELECT * FROM oap_test WHERE a = 2;
