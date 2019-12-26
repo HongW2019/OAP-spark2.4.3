@@ -74,7 +74,7 @@ spark.driver.extraClassPath        /home/oap/jars/oap-0.6-with-spark-2.3.2.jar  
 
 ## Working with OAP Index
 
-You can use SQL DDL(create/drop/refresh/check/show index) to try OAP index functionality, run Spark with the following example to try OAP index function with Spark shell.
+You can use SQL DDL(create/drop/refresh/check/show index) to try OAP index function, run Spark with the following example to try OAP index function with Spark shell.
 ```
 . $SPARK_HOME/bin/spark-shell
 ```
@@ -85,7 +85,7 @@ Step 1. Use `CREATE` to create a table with `parquet` file format on correspondi
        USING parquet
        OPTIONS (path 'hdfs:///user/oap/')""".stripMargin)
 ```
-Step 2. Insert data into table oap_test.
+Step 2. Insert data into table `oap_test`.
 ```
 > val data = (1 to 30000).map { i => (i, s"this is test $i") }.toDF().createOrReplaceTempView("t")
 > spark.sql("insert overwrite table oap_test select * from t")
@@ -108,9 +108,9 @@ For  more detailed examples on OAP performance comparation, you can refer to thi
 ## Working with OAP Cache
 
 If you want to run OAP with cache function, there are two media types in OAP to cache hot data: DRAM and DCPMM. 
-Firstly you should change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. 
-### Use DRAM to Cache with OAP
 
+### Use DRAM Cache 
+Step 1. change some configurations into `$SPARK_HOME/conf/spark-defaults.conf`. 
 
 #### DRAM Cache Configuration in ` $SPARK_HOME/conf/spark-defaults.conf `
 ```
@@ -119,16 +119,16 @@ spark.memory.offHeap.size                   80g      # half of total memory size
 spark.sql.oap.parquet.data.cache.enable     true     #for parquet fileformat
 spark.sql.oap.orc.data.cache.enable         true     #for orc fileformat
 ```
-You can run Spark with the following example to try OAP cache function with DRAM. You should use Spark ***ThriftServer***  with the beeline script to run Spark, cause ThriftServer can launch a Spark Application which can cache hot data for long time in the background, and it also can accept query requests from different clients at the same time.
+Step 2. Run Spark ***ThriftServer***
+You should run Spark ***ThriftServer*** with the beeline scripts to use OAP DRAM cache, ThriftServer launchs Spark applications which can cache hot data for a long time backstage, and it can also accept query requests from different clients at the same time.
 #### Using DRAM Cache on table `oap_test`
-To verify DRAM Cache function, we reuse table `oap_test`
-In the [Working with OAP Index], we have create a table `oap_test`, next we will try OAP Cache.
+To directly verify DRAM Cache function, we reuse table `oap_test` created in the [Working with OAP Index](#Working-with-OAP-Index).
 
-When we use ```spark-shell``` to create table oap_test, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
+When we run ```spark-shell``` to create table `oap_test`, ```metastore_db``` will be created in the current directory "$SPARK_HOME/bin/" , so we need to run Thrift JDBC server in the same directory "$SPARK_HOME/bin/"
 ```
 . $SPARK_HOME/sbin/start-thriftserver.sh
 ```
-Now you can use beeline to test the Thrift JDBC/ODBC server, vsr211 is hostname, so you need change to your hostname.
+Now you can use beeline to test the ThriftSpark ***ThriftServer*** JDBC/ODBC server, vsr211 is hostname, so you need change to your hostname.
 ```
 ./beeline -u jdbc:hive2://vsr211:10000       
 ```
